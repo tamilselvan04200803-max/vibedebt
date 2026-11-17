@@ -56,7 +56,7 @@
   },
   "dependencies": {
     "@playwright/test": "1.65.1",
-    "commander": "^13.1.0",
+    "commander": "^15.1.0",
     "ts-morph": "^25.0.1"
   },
   "devDependencies": {
