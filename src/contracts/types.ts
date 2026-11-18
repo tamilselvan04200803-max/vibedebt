@@ -32,6 +32,7 @@ export interface TopologyReport {
   duplicatedLogic: DuplicateLogicCluster[];
   orphanedState: OrphanedStateItem[];
   apiInconsistencies: ApiInconsistencyItem[];
+  emptyCatchBlocks?: SourceLocation[];
   businessIntents?: BusinessIntent[];
 }
 export interface BusinessIntent extends SourceLocation {

@@ -27,6 +27,7 @@ program.command('map [targetDir]').description('Analyze source topology with the
     if (options.out) writeOutput(options.out, JSON.stringify(report, null, 2) + '\n');
     if (options.html) writeOutput(typeof options.html === 'string' ? options.html : 'vibedebt-dashboard.html', htmlDashboard(report));
     console.log(`VibeDebt AST Cartographer\nFiles: ${report.files.length}\nMonolithic files: ${report.files.filter(f => f.monolithScore).length}\nDuplicated logic groups: ${report.duplicatedLogic.length}\nOrphaned state: ${report.orphanedState.length}\nAPI inconsistencies: ${report.apiInconsistencies.length}`);
+    console.log(`Empty catch blocks: ${report.emptyCatchBlocks?.length ?? 0}`);
     if (options.out) console.log(`Report written to ${options.out}`);
   });
 program.command('anchor [targetDir]').description('Capture and verify public behavioral contracts')

@@ -59,6 +59,14 @@ function meaningfulRead(ref: Node): boolean {
   return true;
 }
 
+export function detectEmptyCatchBlocks(sources: SourceFile[], dir: string): SourceLocation[] {
+  return sources.flatMap(source => {
+    const file = relative(dir, source.getFilePath()).replaceAll('\\', '/');
+    return source.getDescendantsOfKind(SyntaxKind.CatchClause)
+      .filter(clause => clause.getBlock().getStatements().length === 0)
+      .map(clause => ({ file, line: clause.getStartLineNumber(), snippet: clause.getText().slice(0, 1200) }));
+  });
+}
 
 export function detectSmells(sources: SourceFile[], dir: string): Pick<TopologyReport,
   'duplicatedLogic' | 'orphanedState' | 'apiInconsistencies'> {

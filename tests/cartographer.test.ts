@@ -35,6 +35,27 @@ describe('AST cartographer', () => {
     expect(orders?.occurrences.some(o => o.file.endsWith('mockApi.ts'))).toBe(true);
     expect(orders?.occurrences.some(o => o.file.endsWith('OrderManagement.tsx'))).toBe(true);
   });
+  it('reports empty and comment-only catch blocks at their source locations', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'vibedebt-catches-'));
+    try {
+      writeFileSync(join(dir, 'retries.ts'), [
+        'try { retry(); } catch {}',
+        'try { retry(); } catch (error) {',
+        '  // This handler has no statements.',
+        '}',
+        'try { retry(); } catch { /* Intentionally empty. */ }',
+        'try { retry(); } catch (error) { throw error; }',
+        'try { retry(); } finally { cleanup(); }',
+      ].join('\n'));
+      expect(analyzeCodebase(dir).emptyCatchBlocks).toEqual([
+        expect.objectContaining({ file: 'retries.ts', line: 1, snippet: 'catch {}' }),
+        expect.objectContaining({ file: 'retries.ts', line: 2, snippet: expect.stringContaining('catch (error)') }),
+        expect.objectContaining({ file: 'retries.ts', line: 5, snippet: 'catch { /* Intentionally empty. */ }' }),
+      ]);
+    } finally {
+      rmSync(dir, { recursive: true, force: true });
+    }
+  });
   it('rejects missing targets', () => {
     expect(() => analyzeCodebase('./does-not-exist')).toThrow(/directory/i);
   });

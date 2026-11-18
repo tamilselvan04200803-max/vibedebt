@@ -2,7 +2,7 @@
 
 > **Refactor vibe-coded apps without breaking them.**
 
-VibeDebt provides a deterministic safety net for AI-assisted refactoring. It analyzes AST topology to detect duplicated math, orphaned state, and divergent APIs, synthesizes black-box behavioral characterization tests before touching any code, and executes atomic extractions under an automatic byte-for-byte rollback guard.
+VibeDebt provides a deterministic safety net for AI-assisted refactoring. It analyzes AST topology to detect duplicated math, orphaned state, divergent APIs, and catch blocks with no statements. It synthesizes black-box behavioral characterization tests before touching any code and executes atomic extractions under an automatic byte-for-byte rollback guard.
 
 [![CI Status](https://github.com/tamilselvan04200803-max/vibedebt/actions/workflows/ci.yml/badge.svg)](https://github.com/tamilselvan04200803-max/vibedebt/actions/workflows/ci.yml)
 [![Tests](https://img.shields.io/badge/tests-143%20passed%20%7C%201%20skipped-brightgreen?logo=vitest&logoColor=white)](https://github.com/tamilselvan04200803-max/vibedebt/actions/workflows/ci.yml)
